@@ -38,31 +38,58 @@ void runtime()
                 string finalLine;
                 char[] letterArray = line.ToCharArray();
                 int letterIndex = 0;
+                bool inString = false;
                 foreach (char letter in letterArray)
                 {
-                    if (letterIndex < letterArray.Length-1)
+                    //tracks inString bool to the index
+                    if (letterArray[letterIndex] == '"')
                     {
-                        if (letterArray[letterIndex] == ',' && letterArray[letterIndex + 1] == '}' || letterArray[letterIndex] == ',' && letterArray[letterIndex + 1] == ']')
-                        {
-                            letterArray[letterIndex] = ' ';
-                        };
-                    }
-                    else
-                    {
-                        if (letterArray[letterIndex] == ',' && linesArray[linesIndex+1].ToCharArray()[0] == '}' || letterArray[letterIndex] == ',' && linesArray[linesIndex+1].ToCharArray()[0] == ']')
-                        {
-                            letterArray[letterIndex] = ' ';
-                        }
+                        inString = !inString;
                     }
 
+                    if (inString == false)
+                    {
+                        //removes trailing commas
+                        if (letterIndex < letterArray.Length - 1)
+                        {
+                            if (letterArray[letterIndex] == ',' && letterArray[letterIndex + 1] == '}' || letterArray[letterIndex] == ',' && letterArray[letterIndex + 1] == ']')
+                            {
+                                letterArray[letterIndex] = ' ';
+                            };
+                        }
+                        else
+                        {
+                            if (letterArray[letterIndex] == ',' && linesArray[linesIndex + 1].ToCharArray()[0] == '}' || letterArray[letterIndex] == ',' && linesArray[linesIndex + 1].ToCharArray()[0] == ']')
+                            {
+                                letterArray[letterIndex] = ' ';
+                            }
+                        }
+
+                        //removes everything after note
+                        if (letterArray[letterIndex] == '/' && letterArray[letterIndex + 1] == '/')
+                        {
+                            try
+                            {
+                                int commentIndex = 0;
+                                while (true)
+                                {
+                                    letterArray[letterIndex + commentIndex] = ' ';
+
+                                    commentIndex++;
+                                }
+                            }
+                            catch
+                            { }
+                        }
+                    }
                     letterIndex++;
                 };
 
                 finalLine = string.Concat(letterArray);
-                linesArray[linesIndex] = finalLine;
-                string[] lineArray = linesArray[linesIndex].Split("//note//");
 
-                outFile.WriteLine(lineArray[0]);
+                linesArray[linesIndex] = finalLine;
+
+                outFile.WriteLine(linesArray[linesIndex]);
                 linesIndex++;
             };
             outFile.Close();
