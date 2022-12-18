@@ -22,7 +22,7 @@ void runtime()
 
     while (true)
     {
-        if (inputArray[0] == "compile")
+        if (inputArray?[0] == "compile")
         {
             string[] linesArray = File.ReadAllLines(@inputArray[1]);
 
@@ -110,6 +110,10 @@ void runtime()
             }
             Console.Write(" $ ");
         }
+        else if (input == "exit")
+        {
+            Environment.Exit(0);
+        }
         else             //help
         {
             Console.WriteLine(" ┌─────────┬───────────────────┬──────────────────────────────────────┐\n" +
@@ -118,6 +122,7 @@ void runtime()
                               " │ help    │ -                 │ shows this message                   │\n" +
                               " │ docs    │ -                 │ displays documentation page          │\n" +
                               " │ compile │ <path>            │ READ DOCS FIRST!!                    │\n" +
+                              " │ exit    │ -                 │ exits the program                    │\n" +
                               " └─────────┴───────────────────┴──────────────────────────────────────┘");
             Console.Write(" $ ");
         }
