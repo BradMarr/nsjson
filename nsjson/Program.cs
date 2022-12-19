@@ -110,6 +110,12 @@ void runtime()
             }
             Console.Write(" $ ");
         }
+
+        else if (input == "exit")
+        {
+            Environment.Exit(0);
+        }
+
         else             //help
         {
             Console.WriteLine(" ┌─────────┬───────────────────┬──────────────────────────────────────┐\n" +
@@ -118,6 +124,7 @@ void runtime()
                               " │ help    │ -                 │ shows this message                   │\n" +
                               " │ docs    │ -                 │ displays documentation page          │\n" +
                               " │ compile │ <path>            │ READ DOCS FIRST!!                    │\n" +
+                              " │ exit    │ -                 │ exits the program                    │\n" +
                               " └─────────┴───────────────────┴──────────────────────────────────────┘");
             Console.Write(" $ ");
         }
